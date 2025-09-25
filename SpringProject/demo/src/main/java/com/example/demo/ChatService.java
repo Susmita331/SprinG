@@ -1,6 +1,9 @@
 package com.example.demo;
 
 import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,4 +15,16 @@ public class ChatService {
     public String getMessage(String prompt) {
         return chatModel.call(prompt);
     }
+    public ChatResponse getMessageOption(String prompt) {
+        return chatModel.call(
+                new Prompt(
+                        "Explain quantum computing in simple terms.",
+                        OpenAiChatOptions.builder()
+                                .model("gpt-4o")
+                                .maxTokens(150)
+                                .build()
+                )
+        );
+    }
+
 }
