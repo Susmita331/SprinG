@@ -12,10 +12,10 @@ public class ChatService {
     public ChatService(ChatModel chatModel) {
         this.chatModel = chatModel;
     }
-    public String getMessage(String prompt) {
+    public String getResponse(String prompt) {
         return chatModel.call(prompt);
     }
-    public String getMessageOption(String prompt) {
+    public String getResponseOptions(String prompt) {
         ChatResponse response = chatModel.call(
                 new Prompt(
                         "Explain quantum computing in simple terms.",
