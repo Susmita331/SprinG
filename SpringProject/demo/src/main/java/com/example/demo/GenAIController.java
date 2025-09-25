@@ -1,6 +1,6 @@
-package com.example.demo;
+package com.ai.SpringAiDemo;
 
-import jakarta.servlet.http.HttpServlet;
+import com.example.demo.ChatService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.ai.image.ImageResponse;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,21 +12,34 @@ import java.util.List;
 
 @RestController
 public class GenAIController {
+
     private final ChatService chatService;
     private final com.ai.SpringAiDemo.ImageService imageService;
+    private final RecipeService recipeService;
 
-    public GenAIController(ChatService chatService, com.ai.SpringAiDemo.ImageService imageService) {
+    public GenAIController(ChatService chatService, com.ai.SpringAiDemo.ImageService imageService, RecipeService recipeService) {
         this.chatService = chatService;
         this.imageService = imageService;
+        this.recipeService = recipeService;
     }
+
     @GetMapping("ask-ai")
-    public String getResponse(@RequestParam String prompt) {
-        return chatService.getMessage(prompt);
+    public String getResponse(@RequestParam String prompt){
+        return chatService.getResponse(prompt);
     }
+
     @GetMapping("ask-ai-options")
-    public String getResponseOptions(@RequestParam String prompt) {
-        return chatService.getMessage(prompt);
+    public String getResponseOptions(@RequestParam String prompt){
+        return chatService.getResponseOptions(prompt);
     }
+
+    /*@GetMapping("generate-image")
+    public void generateImages(HttpServletResponse response, @RequestParam String prompt) throws IOException {
+        ImageResponse imageResponse = imageService.generateImage(prompt);
+        String imageUrl = imageResponse.getResult().getOutput().getUrl();
+        response.sendRedirect(imageUrl);
+    }*/
+
     @GetMapping("generate-image")
     public List<String> generateImages(HttpServletResponse response,
                                        @RequestParam String prompt,
@@ -42,5 +55,13 @@ public class GenAIController {
                 .toList();
 
         return imageUrls;
+    }
+
+
+    @GetMapping("recipe-creator")
+    public String recipeCreator(@RequestParam String ingredients,
+                                @RequestParam(defaultValue = "any") String cuisine,
+                                @RequestParam(defaultValue = "") String dietaryRestriction) {
+        return recipeService.createRecipe(ingredients, cuisine, dietaryRestriction);
     }
 }
