@@ -15,8 +15,8 @@ public class ChatService {
     public String getMessage(String prompt) {
         return chatModel.call(prompt);
     }
-    public ChatResponse getMessageOption(String prompt) {
-        return chatModel.call(
+    public String getMessageOption(String prompt) {
+        ChatResponse response = chatModel.call(
                 new Prompt(
                         "Explain quantum computing in simple terms.",
                         OpenAiChatOptions.builder()
@@ -25,6 +25,7 @@ public class ChatService {
                                 .build()
                 )
         );
+        return response.getResult().getOutput().getText();
     }
 
 }
