@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 public class GenAIController {
@@ -27,9 +28,19 @@ public class GenAIController {
         return chatService.getMessage(prompt);
     }
     @GetMapping("generate-image")
-    public void generateImages(HttpServletResponse response, @RequestParam String prompt) throws IOException {
-        ImageResponse imageResponse = imageService.generateImage(prompt);
-        String ImageUrl = imageResponse.getResult().getOutput().getUrl();
-        response.sendRedirect(ImageUrl);
+    public List<String> generateImages(HttpServletResponse response,
+                                       @RequestParam String prompt,
+                                       @RequestParam(defaultValue = "hd") String quality,
+                                       @RequestParam(defaultValue = "1") int n,
+                                       @RequestParam(defaultValue = "1024") int width,
+                                       @RequestParam(defaultValue = "1024") int height) throws IOException {
+        ImageResponse imageResponse = imageService.generateImage(prompt, quality, n, width, height);
+
+        // Streams to get urls from ImageResponse
+        List<String> imageUrls = imageResponse.getResults().stream()
+                .map(result -> result.getOutput().getUrl())
+                .toList();
+
+        return imageUrls;
     }
 }

@@ -38,7 +38,7 @@ public class ImageService {
                         OpenAiImageOptions.builder()
                                 .quality("hd")
                                 .model("dall-e-2")
-                                .N(n)
+                                .N(3)
                                 .height(height)
                                 .width(width).build())
 
