@@ -1,6 +1,7 @@
 package com.ai.SpringAiDemo;
 
 import com.example.demo.ChatService;
+import com.example.demo.service.RecipeService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.ai.image.ImageResponse;
 import org.springframework.web.bind.annotation.GetMapping;
