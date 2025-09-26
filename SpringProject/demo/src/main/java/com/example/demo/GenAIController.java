@@ -43,20 +43,27 @@ public class GenAIController {
     }*/
 
     @GetMapping("generate-image")
-    public List<String> generateImages(HttpServletResponse response,
-                                       @RequestParam String prompt,
-                                       @RequestParam(defaultValue = "hd") String quality,
-                                       @RequestParam(defaultValue = "1") int n,
-                                       @RequestParam(defaultValue = "1024") int width,
-                                       @RequestParam(defaultValue = "1024") int height) throws IOException {
-        ImageResponse imageResponse = imageService.generateImage(prompt, quality, n, width, height);
+    public List<String> generateImages(@RequestParam String prompt) {
+        try {
+            ImageResponse imageResponse = imageService.generateImage(prompt, "hd", 1, 1024, 1024);
+            if (imageResponse == null || imageResponse.getResults() == null) {
+                System.out.println("ImageResponse or results is null");
+                return List.of();
+            }
 
-        // Streams to get urls from ImageResponse
-        List<String> imageUrls = imageResponse.getResults().stream()
-                .map(result -> result.getOutput().getUrl())
-                .toList();
+            List<String> imageUrls = imageResponse.getResults().stream()
+                    .map(result -> {
+                        if (result == null || result.getOutput() == null || result.getOutput().getUrl() == null)
+                            return "";
+                        return result.getOutput().getUrl();
+                    })
+                    .toList();
 
-        return imageUrls;
+            return imageUrls;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return List.of(); // return empty list on error
+        }
     }
 
 
