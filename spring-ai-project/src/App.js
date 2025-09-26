@@ -1,23 +1,30 @@
-import logo from './logo.svg';
+import { useState } from 'react';
+
 import './App.css';
 
 function App() {
+  const [activeTab, setActiveTab] = useState('image-generator');
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button className={activeTab === 'image-generator' ? 'active' : ''}
+       onClick={() => handleTabChange('image-generator')}>
+        Image Generator
+        </button>
+      <button  className={activeTab === 'chat' ? 'active' : ''}
+      onClick={() => handleTabChange('chat')}>
+        Ask AI
+        </button>
+      <button className={activeTab === 'recipe-generator' ? 'active' : ''}
+      onClick={() => handleTabChange('recipe-generator')}>
+        Recipe Generator
+        </button>
+
+        <div>
+          {activeTab === 'image-generator' && <ImageGenerator/>}
+          {activeTab === 'chat' && <ChatComponent/>}
+          {activeTab === 'recipe-generator' && <RecipeGenerator/>}
+        </div>
     </div>
   );
 }
