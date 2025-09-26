@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import ImageGenerator from './components/ImageGenerator';
-import ChatComponent from './components/ChatComponent';
-import RecipeGenerator from './components/RecipeGenerator';
+import ImageGenerator from './componants/ImageGenerator';
+import ChatComponent from './componants/ChatComponent';
+import RecipeGenerator from './componants/RecipeGenerator';
 import './App.css';
 
 function App() {
