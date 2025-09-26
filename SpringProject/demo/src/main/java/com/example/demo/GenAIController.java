@@ -1,7 +1,8 @@
-package com.ai.SpringAiDemo;
+package com.example.demo;
 
 import com.example.demo.ChatService;
-import com.example.demo.service.RecipeService;
+
+
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.ai.image.ImageResponse;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +16,10 @@ import java.util.List;
 public class GenAIController {
 
     private final ChatService chatService;
-    private final com.ai.SpringAiDemo.ImageService imageService;
+    private final ImageService imageService;
     private final RecipeService recipeService;
 
-    public GenAIController(ChatService chatService, com.ai.SpringAiDemo.ImageService imageService, RecipeService recipeService) {
+    public GenAIController(ChatService chatService, ImageService imageService, RecipeService recipeService) {
         this.chatService = chatService;
         this.imageService = imageService;
         this.recipeService = recipeService;
