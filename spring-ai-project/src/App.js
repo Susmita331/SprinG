@@ -1,9 +1,15 @@
 import { useState } from 'react';
-
+import ImageGenerator from './components/ImageGenerator';
+import ChatComponent from './components/ChatComponent';
+import RecipeGenerator from './components/RecipeGenerator';
 import './App.css';
 
 function App() {
   const [activeTab, setActiveTab] = useState('image-generator');
+  const handleTabChange = (tab) => {
+    //alert(tab)
+    setActiveTab(tab);
+  };
 
   return (
     <div className="App">
